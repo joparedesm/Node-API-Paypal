@@ -4,7 +4,9 @@ import { PORT } from './config.js';
 
 const app = express();
 
-app.use(rutasPagos)
+app.use('/api/pagos',rutasPagos)
+
+
 
 app.listen(PORT);
 console.log("Servidor en el puerto: ", PORT)
