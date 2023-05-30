@@ -4,8 +4,7 @@
 
 * yarn add express morgan cors
 * yarn add nodemon -D
-* yarn add dotenv
-* yarn add axios
+* yarn add dotenv axios
 
 ## Crea un Proyecto Básico de Node (Estructura)
 
@@ -35,15 +34,52 @@
 * y ver el método POST con la ruta para enviar la petición
 * también hay un ejemplo de un json con los datos que se pueden enviar.
 * Los mas importantes son:
-    "intent": "CAPTURE"
-    "purchase_units": [ ... ]
-    "application_context": { ... }
+
+    ```js
+        "intent": "CAPTURE"
+        "purchase_units": [ ... ]
+        "application_context": { ... }
+    ```
+
 * Se hace una petición con axios a la dirección del api de PayPal
 * axios.post('https://api-m.paypal.com/v2/checkout/orders');
 * Pero este es el de producción por lo que usa la variable de entorno para desarrollo
 * `${ PAYPAL_API }/v2/checkout/orders`
 * Se añade los headers
-* Axios ya incluye "Content-Type": "application/json" que es requerido en la cabecera
+* Axios ya incluye `"Content-Type": "application/json"` que es requerido en las cabeceras
 * Pero antes se envía otra petición asíncrona para registrarse
 * Se envían como parámetros de autenticación el nombre de usuario (Client ID) y la contraseña (Secret key) a la dirección `${PAYPAL_API}/v1/oauth2/token`
+* Y se obtiene el access token que se enviara en las cabeceras de primera petición
+* Se agrega a los headers
+* Authorization: `Bearer ${ access_token }`
+* Finalmente obtenemos los datos de la respuesta: respuesta.data
+
+## Respuesta y Pruebas
+
+* Dentro de los datos buscamos: links > [{ 0 }, { **1** }] > href
+* Este enlace por ejemplo `('https://api.sandbox.paypal.com/checkoutnow?token=79R656090H888815Y')`
+* Nos llevara a una ventana de login en sandbox.paypal
+* Podemos conectarnos con nuestra cuenta de prueba
+* En developer portal > Testing Tools > Sandbox test accounts > Create account
+* Seleccionas **Personal (Buyer Account)** y lo creas
+* Tomamos los datos de la nueva cuenta e ingresamos al login del enlace
+* Realizamos una compra de prueba y vemos el resultado
+* Nos retorna una pagina con **captureOrder created**
+
+## Capturar la Orden desde el Backend
+
+* En el enlace de la ultima pagina podemos encontrar un token y lo tomamos
+* Al capturar la orden guardamos el token: `const { token } = req.query;`
+* Hacemos otra petición a `${ PAYPAL_API }/v2/checkout/orders/${ token }/capture`
+* Enviamos el usuario y la contraseña de venv, recibimos los datos de la respuesta y retornamos un `"Pagado"`
+* En Crear Orden cambiamos el return para que muestre el enlace dentro de respuesta en el navegador
+* `return res.json(respuesta.data);`
+* Puedes usar una extension llamada **"JSON Viewer"** para ver mejor los json y también puedes cambiar el tema
+* Entras al enlace del elemento del arreglo en el indice **1**
+* Ya debería estar registrado el usuario pero de lo contrario has el login
+* Realiza un pago ficticio de nuevo y debería decir **pagado**.
+* También puedes ingresar a sandbox paypal normal con la cuenta falsa y ver las transacciones realizadas.
+* Ademas con los datos podrías guardar el nombre, correo, id de la transacción, id de la cuenta, estado de la transacción (status), etc.
+
+## Cancelar Orden
 *
