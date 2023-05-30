@@ -54,4 +54,6 @@ export const capturarOrden = async (req, res)=>{
     return res.send('Pagado');
 };
 
-export const cancelarOrden = async (req, res)=>res.send("Orden Cancelada");
+export const cancelarOrden = async (req, res)=>{
+    res.redirect('/')
+};

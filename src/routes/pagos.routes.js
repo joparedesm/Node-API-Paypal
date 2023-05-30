@@ -4,7 +4,7 @@ import { crearOrden, capturarOrden, cancelarOrden } from "../controllers/pagos.c
 const router = Router();
 
 
-router.get('/crear-orden', crearOrden);
+router.post('/crear-orden', crearOrden);
 
 router.get('/capturar-orden', capturarOrden);
 

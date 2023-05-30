@@ -82,4 +82,35 @@
 * Ademas con los datos podrías guardar el nombre, correo, id de la transacción, id de la cuenta, estado de la transacción (status), etc.
 
 ## Cancelar Orden
-*
+
+* se crea una carpeta public con index.html y pagado.html
+* En index.js se usa el modulo path de node para enviar la dirección de public
+
+    ```js
+        app.use(express.static(path.resolve('src/public')));
+    ```
+* Cambiar la ruta de crear Orden a POST
+    ```js
+    router.post('/crear-orden', crearOrden);
+    ```
+* En index.html crear un botón y un script que haga un fetch a la ruta /crear-orden y obtenga la respuesta con el enlace a paypal a donde te enviara.
+
+    ```js
+    const checkout = document.getElementById('checkout');
+        checkout.addEventListener('click', async ()=>{
+            const respuesta = await fetch('/crear-orden', {
+                method: 'POST'
+            });
+            const datos = await respuesta.json();
+            window.location.href = datos.links[1].href;
+        })
+    ```
+* Extra
+* En respuesta puedes enviar los productos como un arreglo
+
+```js
+    const respuesta = await fetch('/crear-orden', {
+                method: 'POST',
+                body: JSON.stringify([{id: ..., product: ...}, ...{products}])
+            });
+```
