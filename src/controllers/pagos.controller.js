@@ -7,7 +7,7 @@ export const crearOrden = async (req, res)=>{
         "intent": "CAPTURE",
         "purchase_units": [ {
             amount: {
-                concurrency_code: "USD",
+                currency_code: 'USD',
                 value: '100.00'
              }
         } ],

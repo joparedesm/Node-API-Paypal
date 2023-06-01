@@ -5,6 +5,7 @@ const router = Router();
 
 
 router.post('/crear-orden', crearOrden);
+router.get('/crear-orden', crearOrden);
 
 router.get('/capturar-orden', capturarOrden);
 
