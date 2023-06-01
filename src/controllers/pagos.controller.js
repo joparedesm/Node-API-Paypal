@@ -23,14 +23,14 @@ export const crearOrden = async (req, res)=>{
     const params = new URLSearchParams();
     params.append('grant_type', 'client_credentials');
 
-    const { datos } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
+    const { data } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
         auth: {
             username: PAYPAL_Client,
             password: PAYPAL_KEY
         }
     })
 
-    console.log(datos);
+    console.log(data);
 
     return res.json('capture order')
 
