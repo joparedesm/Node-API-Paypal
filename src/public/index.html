@@ -1,20 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos</title>
+    <style>
+        /* Estilos para el navbar */
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Estilos para la sección del producto */
+        .product {
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            width: 20%;
+            background-color: #0000000f;
+        }
+
+        .product img {
+            width: -webkit-fill-available;
+        }
+
+        .product h2 {
+            margin-top: 0;
+        }
+
+        .product p {
+            margin-bottom: 0;
+        }
+
+        /* Estilos para el botón de compra */
+        #checkout {
+            margin-top: inherit;
+            border-radius: 15%;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-color: black;
+            color: black;
+            background-image: linear-gradient(45deg, black 50%, transparent 50%);
+            background-position: 100%;
+            background-size: 400%;
+            transition: background 300ms ease-in-out, color 400ms ease-in-out;
+        }
+        #checkout:hover {
+            background-position: 0;
+            color: white;
+            cursor: pointer;
+          }
+    </style>
 </head>
+
 <body>
     <h1>Productos</h1>
-    <button id="checkout">
-        Pagar
-    </button>
+    <div class="navbar">
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </div>
+
+    <div class="product">
+        <img src="./img/ruta-de-la-imagen-del-producto.jpg" alt="Producto">
+        <h2>Nombre del Producto</h2>
+        <p>Descripción del producto.</p>
+        <p>$99.99</p>
+        <button id="checkout">
+            Pagar
+        </button>
+    </div>
     <script>
         //const checkout = document.querySelector('#checkout')[0];
         const checkout = document.getElementById('checkout');
-        checkout.addEventListener('click', async ()=>{
+        checkout.addEventListener('click', async () => {
             const respuesta = await fetch('/api/pagos/crear-orden', {
                 method: 'POST'
             });
@@ -23,4 +103,5 @@
         })
     </script>
 </body>
+
 </html>
