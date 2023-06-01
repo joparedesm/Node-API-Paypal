@@ -7,7 +7,7 @@ export const crearOrden = async (req, res)=>{
         "intent": "CAPTURE",
         "purchase_units": [ {
             amount: {
-                concurrency_code: 'USD',
+                currency_code: 'USD',
                 value: '100.00'
              }
         } ],
@@ -23,21 +23,22 @@ export const crearOrden = async (req, res)=>{
     const params = new URLSearchParams();
     params.append('grant_type', 'client_credentials');
 
-    const { data } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
+    const { data: { access_token } } = await axios.post(`${PAYPAL_API}/v1/oauth2/token`, params, {
         auth: {
             username: PAYPAL_Client,
             password: PAYPAL_KEY
         }
     })
 
-    console.log(data);
+    const respuesta = await axios.post(`${ PAYPAL_API }/v2/checkout/orders`, orden, {
+        headers: {
+            Authorization: `Bearer ${ access_token }`
+        }
+    });
+
+    console.log(respuesta.data)
 
     return res.json('capture order')
-
-    // axios.post(`${ PAYPAL_API }/v2/checkout/orders`, orden, {
-    //     headers: {
-    //     }
-    // });
 
 };
 
