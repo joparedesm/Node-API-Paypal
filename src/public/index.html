@@ -15,7 +15,7 @@
         //const checkout = document.querySelector('#checkout')[0];
         const checkout = document.getElementById('checkout');
         checkout.addEventListener('click', async ()=>{
-            const respuesta = await fetch('/crear-orden', {
+            const respuesta = await fetch('/api/pagos/crear-orden', {
                 method: 'POST'
             });
             const datos = await respuesta.json();

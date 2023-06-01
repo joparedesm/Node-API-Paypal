@@ -10,4 +10,5 @@ app.use('/api/pagos',rutasPagos);
 app.use(express.static(path.resolve('src/public')));
 
 app.listen(PORT);
+
 console.log("Servidor en el puerto: ", PORT);

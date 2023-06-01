@@ -42,7 +42,7 @@
     ```
 
 * Se hace una petición con axios a la dirección del api de PayPal
-* axios.post('https://api-m.paypal.com/v2/checkout/orders');
+* axios.post`('https://api-m.paypal.com/v2/checkout/orders')`;
 * Pero este es el de producción por lo que usa la variable de entorno para desarrollo
 * `${ PAYPAL_API }/v2/checkout/orders`
 * Se añade los headers
