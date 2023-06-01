@@ -1,5 +1,4 @@
-import { json } from "express";
-import { HOST, PAYPAL_API, PAYPAL_Client, PAYPAL_KEY } from "../config";
+import { HOST, PAYPAL_API, PAYPAL_Client, PAYPAL_KEY } from "../config.js";
 import axios from "axios";
 
 // export const crearOrden = (req, res)=>res.send("Orden Cancelada");
@@ -12,7 +11,7 @@ export const crearOrden = async (req, res)=>{
                 value: '100.00'
              }
         } ],
-        "application_context": { 
+        "application_context": {
             brand_name: "Tienda",
             landing_page: "NO_PREFERENCE",
             user_action: "PAY_NOW",
